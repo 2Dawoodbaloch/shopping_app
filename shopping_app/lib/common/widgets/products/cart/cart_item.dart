@@ -4,7 +4,6 @@ import 'package:shopping_app/common/widgets/texts/brand_title_with_verify_icon.d
 import 'package:shopping_app/common/widgets/texts/product_title_text.dart';
 import 'package:shopping_app/features/shop/models/cart_item_model.dart';
 import 'package:shopping_app/utils/constants/colors.dart';
-import 'package:shopping_app/utils/constants/images.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/helpers/helper_functions.dart';
 

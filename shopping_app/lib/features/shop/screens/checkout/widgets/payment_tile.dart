@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/common/widgets/custom_shapes/rounded_container.dart';
 import 'package:shopping_app/features/shop/controllers/checkout/checkout_controller.dart';

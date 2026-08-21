@@ -4,7 +4,6 @@ import 'package:shopping_app/common/style/padding.dart';
 import 'package:shopping_app/common/widgets/appbar/appbar.dart';
 import 'package:shopping_app/common/widgets/button/elevated_button.dart';
 import 'package:shopping_app/common/widgets/custom_shapes/rounded_container.dart';
-import 'package:shopping_app/common/widgets/login_signup/success_screen.dart';
 import 'package:shopping_app/common/widgets/textfields/promo_text_field.dart';
 import 'package:shopping_app/features/shop/controllers/cart/cart_controller.dart';
 import 'package:shopping_app/features/shop/controllers/order/order_controller.dart';
@@ -12,8 +11,6 @@ import 'package:shopping_app/features/shop/screens/cart/widgets/cart_items.dart'
 import 'package:shopping_app/features/shop/screens/checkout/widgets/billing_address_section.dart';
 import 'package:shopping_app/features/shop/screens/checkout/widgets/billing_amount_section.dart';
 import 'package:shopping_app/features/shop/screens/checkout/widgets/billing_payment_section.dart';
-import 'package:shopping_app/navigation_menu.dart';
-import 'package:shopping_app/utils/constants/images.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/constants/texts.dart';
 import 'package:shopping_app/utils/helpers/pricing_calculator.dart';

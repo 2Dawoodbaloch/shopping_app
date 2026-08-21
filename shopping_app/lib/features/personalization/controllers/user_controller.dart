@@ -170,6 +170,7 @@ class UserController extends GetxController {
     }
   }
 
+  /// Function to update profile picture of user
   Future<void> updateUserProfilePicture() async {
     try {
       // Pick Image From Gallery

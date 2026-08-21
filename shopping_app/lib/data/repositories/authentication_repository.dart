@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
@@ -145,36 +146,13 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  // Google Sign in
+Future<void> sendPasswordResetEmail(String email) async {
 
-  Future<UserCredential> signInWithGoogle() async {
-    try {
-      // get instance of google
-      GoogleSignIn googleSignIn = GoogleSignIn.instance;
+try {
 
-      // initialize google sign in
-      await googleSignIn.initialize(
-        serverClientId:
-            "247599199257-me0l013c6o1pl1m5jun718mss3acatd9.apps.googleusercontent.com247599199257-me0l013c6o1pl1m5jun718mss3acatd9.apps.googleusercontent.com",
-      );
+  await _auth.sendPasswordResetEmail(email: email);
 
-      // create user account
-      GoogleSignInAccount googleUser = await googleSignIn.authenticate(
-        scopeHint: ['email'],
-      );
-      final googleAuth =  googleUser.authentication;
-      // create credentails
-      final OAuthCredential credential = GoogleAuthProvider.credential(
-        idToken: googleAuth.idToken,
-        accessToken: googleAuth.idToken,
-      );
-
-      UserCredential userCredential = await _auth.signInWithCredential(
-        credential,
-      );
-
-      return userCredential;
-    } on FirebaseAuthException catch (e) {
+}  on FirebaseAuthException catch (e) {
       throw UFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
       throw UFirebaseException(e.code).message;
@@ -183,9 +161,243 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw UPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong, Please try again';
+      throw 'Something went wrong. Please try again';
     }
+}
+
+
+  // Google Sign in
+
+  // Future<UserCredential> signInWithGoogle() async {
+  //   try {
+  //     // get instance of google
+  //     GoogleSignIn googleSignIn = GoogleSignIn.instance;
+
+  //     // initialize google sign in
+  //     await googleSignIn.initialize(
+  //       serverClientId:
+  //           "247599199257-me0l013c6o1pl1m5jun718mss3acatd9.apps.googleusercontent.com",
+  //     );
+
+  //     // create user account
+  //     GoogleSignInAccount googleUser = await googleSignIn.authenticate(
+  //       scopeHint: ['email'],
+  //     );
+  //     final googleAuth =  googleUser.authentication;
+  //     // create credentails
+  //     final OAuthCredential credential = GoogleAuthProvider.credential(
+  //       idToken: googleAuth.idToken,
+
+  //     );
+
+  //     UserCredential userCredential = await _auth.signInWithCredential(
+  //       credential,
+  //     );
+
+  //     return userCredential;
+  //   } on FirebaseAuthException catch (e) {
+  //     throw UFirebaseAuthException(e.code).message;
+  //   } on FirebaseException catch (e) {
+  //     throw UFirebaseException(e.code).message;
+  //   } on FormatException catch (_) {
+  //     throw UFormatException();
+  //   } on PlatformException catch (e) {
+  //     throw UPlatformException(e.code).message;
+  //   } catch (e) {
+  //     throw 'Something went wrong, Please try again';
+  //   }
+  // }
+
+  Future<UserCredential> signInWithGoogle() async {
+  try {
+    debugPrint('========== GOOGLE SIGN-IN START ==========');
+
+    // ============================================================
+    // STEP 1: Get GoogleSignIn instance
+    // ============================================================
+    debugPrint('STEP 1: Getting GoogleSignIn instance...');
+
+    final GoogleSignIn googleSignIn = GoogleSignIn.instance;
+
+    debugPrint('STEP 1 SUCCESS: GoogleSignIn instance obtained');
+
+
+    // ============================================================
+    // STEP 2: Initialize Google Sign-In
+    // ============================================================
+    debugPrint('STEP 2: Initializing Google Sign-In...');
+
+    await googleSignIn.initialize(
+      serverClientId:
+          "YOUR_WEB_CLIENT_ID",
+    );
+
+    debugPrint('STEP 2 SUCCESS: Google Sign-In initialized');
+
+
+    // ============================================================
+    // STEP 3: Check whether authentication is supported
+    // ============================================================
+    debugPrint('STEP 3: Checking authenticate support...');
+
+    final bool supportsAuthenticate =
+        googleSignIn.supportsAuthenticate();
+
+    debugPrint(
+      'STEP 3 RESULT: supportsAuthenticate = $supportsAuthenticate',
+    );
+
+
+    // ============================================================
+    // STEP 4: Open Google account picker
+    // ============================================================
+    debugPrint('STEP 4: Opening Google account picker...');
+
+    final GoogleSignInAccount googleUser =
+        await googleSignIn.authenticate(
+      scopeHint: ['email'],
+    );
+
+    debugPrint('STEP 4 SUCCESS: Google account selected');
+    debugPrint('Google account email: ${googleUser.email}');
+    debugPrint('Google account display name: ${googleUser.displayName}');
+    debugPrint('Google account ID: ${googleUser.id}');
+
+
+    // ============================================================
+    // STEP 5: Get Google authentication data
+    // ============================================================
+    debugPrint('STEP 5: Getting Google authentication...');
+
+    final GoogleSignInAuthentication googleAuth =
+        googleUser.authentication;
+
+    debugPrint('STEP 5 SUCCESS: Google authentication obtained');
+
+    debugPrint(
+      'ID token available: ${googleAuth.idToken != null}',
+    );
+
+
+    // ============================================================
+    // STEP 6: Create Firebase credential
+    // ============================================================
+    debugPrint('STEP 6: Creating Firebase credential...');
+
+    final OAuthCredential credential =
+        GoogleAuthProvider.credential(
+      idToken: googleAuth.idToken,
+    );
+
+    debugPrint('STEP 6 SUCCESS: Firebase credential created');
+
+
+    // ============================================================
+    // STEP 7: Sign in to Firebase
+    // ============================================================
+    debugPrint('STEP 7: Signing in to Firebase...');
+
+    final UserCredential userCredential =
+        await _auth.signInWithCredential(
+      credential,
+    );
+
+    debugPrint('STEP 7 SUCCESS: Firebase sign-in successful');
+
+    debugPrint(
+      'Firebase UID: ${userCredential.user?.uid}',
+    );
+
+    debugPrint(
+      'Firebase email: ${userCredential.user?.email}',
+    );
+
+    debugPrint('========== GOOGLE SIGN-IN SUCCESS ==========');
+
+    return userCredential;
   }
+
+  // ================================================================
+  // GOOGLE SIGN-IN ERROR
+  // ================================================================
+  on GoogleSignInException catch (e, stackTrace) {
+    debugPrint('========== GOOGLE SIGN-IN EXCEPTION ==========');
+    debugPrint('Code: ${e.code}');
+    debugPrint('Description: ${e.description}');
+    debugPrint('Details: ${e.details}');
+    debugPrint('StackTrace: $stackTrace');
+    debugPrint('================================================');
+
+    rethrow;
+  }
+
+  // ================================================================
+  // FIREBASE AUTH ERROR
+  // ================================================================
+  on FirebaseAuthException catch (e, stackTrace) {
+    debugPrint('========== FIREBASE AUTH EXCEPTION ==========');
+    debugPrint('Code: ${e.code}');
+    debugPrint('Message: ${e.message}');
+    debugPrint('Email: ${e.email}');
+    debugPrint('Credential: ${e.credential}');
+    debugPrint('StackTrace: $stackTrace');
+    debugPrint('==============================================');
+
+    throw UFirebaseAuthException(e.code).message;
+  }
+
+  // ================================================================
+  // FIREBASE GENERAL ERROR
+  // ================================================================
+  on FirebaseException catch (e, stackTrace) {
+    debugPrint('========== FIREBASE EXCEPTION ==========');
+    debugPrint('Code: ${e.code}');
+    debugPrint('Message: ${e.message}');
+    debugPrint('StackTrace: $stackTrace');
+    debugPrint('========================================');
+
+    throw UFirebaseException(e.code).message;
+  }
+
+  // ================================================================
+  // FORMAT ERROR
+  // ================================================================
+  on FormatException catch (e, stackTrace) {
+    debugPrint('========== FORMAT EXCEPTION ==========');
+    debugPrint('Error: $e');
+    debugPrint('StackTrace: $stackTrace');
+    debugPrint('======================================');
+
+    throw UFormatException();
+  }
+
+  // ================================================================
+  // PLATFORM ERROR
+  // ================================================================
+  on PlatformException catch (e, stackTrace) {
+    debugPrint('========== PLATFORM EXCEPTION ==========');
+    debugPrint('Code: ${e.code}');
+    debugPrint('Message: ${e.message}');
+    debugPrint('Details: ${e.details}');
+    debugPrint('StackTrace: $stackTrace');
+    debugPrint('========================================');
+
+    throw UPlatformException(e.code).message;
+  }
+
+  // ================================================================
+  // UNKNOWN ERROR
+  // ================================================================
+  catch (e, stackTrace) {
+    debugPrint('========== UNKNOWN GOOGLE ERROR ==========');
+    debugPrint('Error: $e');
+    debugPrint('Type: ${e.runtimeType}');
+    debugPrint('StackTrace: $stackTrace');
+    debugPrint('==========================================');
+
+    rethrow;
+  }
+}
 
   // delete account
   Future<void> deleteAccount() async {

@@ -19,8 +19,7 @@ class SearchStoreBrands extends StatelessWidget {
     final controller = Get.put(BrandController());
     return Obx(() {
       /// [State] - Loading
-      if (controller.isLoading.value)
-        return Center(child: CircularProgressIndicator());
+      if (controller.isLoading.value)  return Center(child: CircularProgressIndicator());
 
       /// [State] - Empty
       if (controller.allBrands.isEmpty) return Text('No Brands Found!');

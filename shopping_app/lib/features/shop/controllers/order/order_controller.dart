@@ -22,6 +22,9 @@ class OrderController extends GetxController {
   final addressController = AdressController.instance;
   final _repository = Get.put(OrderRepository());
 
+
+
+/// Process Order
   Future<void> processOrder(double totalAmount) async {
     try {
       // start loading
@@ -31,8 +34,15 @@ class OrderController extends GetxController {
       String usedId = AuthenticationRepository.instance.currentUser!.uid;
       if (usedId.isEmpty) return;
 
-      // Create Order Model
 
+/// check adress exist or not
+if (AdressController.instance.selectedAddress.value.id.isEmpty){
+  USnackBarHelpers.errorSnackBar(title: 'Address Not Selected',message: 'Please Select the Adress');
+  return;
+}
+
+
+      // Create Order Model
       OrderModel order = OrderModel(
         id: UniqueKey().toString(),
         status: OrderStatus.pending,

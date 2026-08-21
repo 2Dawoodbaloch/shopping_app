@@ -167,30 +167,30 @@ class ProductRepository extends GetxController {
     }
   }
 
-//   /// [Fetch] - Function to fetch single products from Firebase
-//   Future<ProductModel> fetchSingleProduct(String productId) async {
-//     try {
-//       final query = await _db
-//           .collection(UKeys.productsCollection)
-//           .doc(productId)
-//           .get();
+  /// [Fetch] - Function to fetch single products from Firebase
+  Future<ProductModel> fetchSingleProduct(String productId) async {
+    try {
+      final query = await _db
+          .collection(UKeys.productsCollection)
+          .doc(productId)
+          .get();
 
-//       if (query.id.isNotEmpty) {
-//         ProductModel product = ProductModel.fromSnapshot(query);
-//         return product;
-//       }
+      if (query.id.isNotEmpty) {
+        ProductModel product = ProductModel.fromSnapshot(query);
+        return product;
+      }
 
-//       return ProductModel.empty();
-//     } on FirebaseException catch (e) {
-//       throw UFirebaseException(e.code).message;
-//     } on FormatException catch (_) {
-//       throw UFormatException();
-//     } on PlatformException catch (e) {
-//       throw UPlatformException(e.code).message;
-//     } catch (e) {
-//       throw 'Something went wrong. Please try again';
-//     }
-//   }
+      return ProductModel.empty();
+    } on FirebaseException catch (e) {
+      throw UFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw UFormatException();
+    } on PlatformException catch (e) {
+      throw UPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
 //   /// [Fetch] - Function to fetch all list of products from Firebase
 //   Future<List<ProductModel>> fetchAllFeaturedProducts() async {
@@ -219,7 +219,7 @@ class ProductRepository extends GetxController {
 //     }
 //   }
 
-//   /// [Fetch] - Function to fetch all list of products from Firebase
+  /// [Fetch] - Function to fetch all list of products from Firebase
   Future<List<ProductModel>> fetchProductsByQuery(Query query) async {
     try {
       final querySnapshot = await query.get();

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:shopping_app/common/widgets/texts/section_heading.dart';
 import 'package:shopping_app/features/personalization/controllers/adress_controller.dart';
 import 'package:shopping_app/utils/constants/colors.dart';

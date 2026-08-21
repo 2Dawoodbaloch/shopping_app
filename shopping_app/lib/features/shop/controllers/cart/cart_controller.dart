@@ -30,12 +30,47 @@ class CartController extends GetxController {
   //   super.onInit();
   // }
 
-  CartController(){
+  CartController() {
     loadCartItems();
   }
 
 
-// load all cart items from local storage
+
+  /// Direct Checkout single product
+  Future<void> checkout(ProductModel product) async {
+    // clear the cart
+    cartItems.clear();
+
+    // set quantity to 1 by default
+    productQuantityInCart.value = 1;
+
+    // Check Variation of product if it is variable product
+    if (product.productType == ProductType.variable.toString() &&
+        variationController.selectedVariation.value.id.isEmpty) {
+      USnackBarHelpers.customToast(message: 'Select Variation');
+      return;
+    }
+    // Out Of Stock Status
+    if (product.productType == ProductType.variable.toString()) {
+      if (variationController.selectedVariation.value.stock < 1) {
+        USnackBarHelpers.warningSnackBar(
+          title: 'Out Of Stock',
+          message: 'This variation is out of stock',
+        );
+        return;
+      }
+    } else {
+      if (product.stock < 1) {
+        USnackBarHelpers.warningSnackBar(
+          title: 'Out Of Stock',
+          message: 'This product is out of stock',
+        );
+      }
+    }
+  }
+
+ 
+  // load all cart items from local storage
   void loadCartItems() {
     List<dynamic>? storedCartItems = _storage.read(UKeys.cartItemsKey);
     if (storedCartItems != null) {

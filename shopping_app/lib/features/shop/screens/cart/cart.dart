@@ -5,11 +5,9 @@ import 'package:shopping_app/common/style/padding.dart';
 import 'package:shopping_app/common/widgets/appbar/appbar.dart';
 import 'package:shopping_app/common/widgets/button/elevated_button.dart';
 import 'package:shopping_app/common/widgets/icons/circular_icon.dart';
-import 'package:shopping_app/common/widgets/loaders/animation_loader.dart';
 import 'package:shopping_app/features/shop/controllers/cart/cart_controller.dart';
 import 'package:shopping_app/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:shopping_app/features/shop/screens/checkout/checkout.dart';
-import 'package:shopping_app/utils/constants/images.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 
 class CartScreen extends StatelessWidget {
@@ -28,13 +26,13 @@ class CartScreen extends StatelessWidget {
 
       // body
       body: Obx(() {
-        final emptyWidget = UAnimationLoader(
-          text: 'Cart is empty',
-          animation: UImages.cartEmptyAnimation,
-          showActionButton: true,
-          actionText: "Let's fill it",
-          onActionPressed: Get.back,
-        ); // UAnimationLoader
+        // final emptyWidget = UAnimationLoader(
+        //   text: 'Cart is empty',
+        //   animation: UImages.cartEmptyAnimation,
+        //   showActionButton: true,
+        //   actionText: "Let's fill it",
+        //   onActionPressed: Get.back,
+        // ); // UAnimationLoader
 
         if (controller.cartItems.isEmpty) {
           return Center(child: Text("Cart is Empty"),);

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shopping_app/features/shop/controllers/cart/cart_controller.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/constants/texts.dart';
-import 'package:shopping_app/utils/helpers/device_helpers.dart';
 import 'package:shopping_app/utils/helpers/pricing_calculator.dart';
 
 class UBillingAmountSection extends StatelessWidget {

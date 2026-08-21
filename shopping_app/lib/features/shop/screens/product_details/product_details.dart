@@ -3,6 +3,7 @@ import 'package:readmore/readmore.dart';
 import 'package:shopping_app/common/style/padding.dart';
 import 'package:shopping_app/common/widgets/button/elevated_button.dart';
 import 'package:shopping_app/common/widgets/texts/section_heading.dart';
+import 'package:shopping_app/features/shop/controllers/cart/cart_controller.dart';
 import 'package:shopping_app/features/shop/models/product_model.dart';
 import 'package:shopping_app/features/shop/screens/product_details/widgets/bottom_add_to_cart.dart';
 import 'package:shopping_app/features/shop/screens/product_details/widgets/product_attributes.dart';
@@ -39,7 +40,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     SizedBox(height: USizes.spaceBtwSections),
                   ],
                   // checkout buttonsp
-                  UElevatedButton(onPressed: () {}, child: Text('Checkout')),
+                  UElevatedButton(onPressed: () => CartController.instance.checkout(product), child: Text('Checkout')),
                   SizedBox(height: USizes.spaceBtwSections),
 
                   // description

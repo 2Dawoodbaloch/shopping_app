@@ -97,9 +97,6 @@ class LoginController extends GetxController {
   
         return;
       }
-      //------------------------------------------------------------------------------------------------------
-
-      //--------------------------------------------------------------------------------------------------------------------
 
       // google authentication
       UserCredential userCredential = await AuthenticationRepository.instance
