@@ -6,8 +6,10 @@ import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/helpers/helper_functions.dart';
 
 class UProductQuantityWithAddRemove extends StatelessWidget {
-  const UProductQuantityWithAddRemove({super.key});
+  const UProductQuantityWithAddRemove({super.key,required this.quanitity,this.add,this.remove});
 
+final int quanitity;
+final VoidCallback? add,remove;
   @override
   Widget build(BuildContext context) {
     final dark = UHelperFunctions.isDarkMode(context);
@@ -21,10 +23,11 @@ class UProductQuantityWithAddRemove extends StatelessWidget {
           size: USizes.iconSm,
           color: dark ? UColors.white : UColors.black,
           backgroundColor: dark ? UColors.darkGrey : UColors.light,
+          onPressed: remove,
         ),
         SizedBox(width: USizes.spaceBtwItems),
         // counter text
-        Text('2', style: Theme.of(context).textTheme.titleSmall),
+        Text(quanitity.toString(), style: Theme.of(context).textTheme.titleSmall),
         SizedBox(width: USizes.spaceBtwItems),
 
         // icrement text
@@ -35,6 +38,7 @@ class UProductQuantityWithAddRemove extends StatelessWidget {
           size: USizes.iconSm,
           color: UColors.white,
           backgroundColor: UColors.primary,
+          onPressed: add,
         ),
       ],
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_app/utils/constants/images.dart';
+import 'package:shopping_app/features/shop/models/brand_model.dart';
 import '../../../utils/constants/enums.dart';
 import '../../../utils/constants/sizes.dart';
 import '../custom_shapes/rounded_container.dart';
@@ -11,11 +11,12 @@ class UBrandCard extends StatelessWidget {
     super.key,
     this.showBorder = true,
     this.onTap,
-    // required this.brand,
+    required this.brand,
   });
 
   final bool showBorder;
   final VoidCallback? onTap;
+  final BrandModel brand;
 
   // final BrandModel brand;
 
@@ -33,8 +34,8 @@ class UBrandCard extends StatelessWidget {
             /// Brand Image
             Flexible(
               child: URoundedImage(
-                imageUrl: UImages.bataLogo,
-                isNetworkImage: false,
+                imageUrl: brand.image,
+                isNetworkImage: true,
                 backgroundColor: Colors.transparent,
               ),
             ),
@@ -48,13 +49,13 @@ class UBrandCard extends StatelessWidget {
                 children: [
                   /// Brand Name & verify Icon
                   UBrandTitleWithVerifyIcon(
-                    title: 'bata',
+                    title: brand.name,
                     brandTextSize: TextSizes.large,
                   ),
 
                   /// Text
                   Text(
-                    '72 products',
+                    '${brand.productsCount} products',
                     style: Theme.of(context).textTheme.labelMedium,
                     overflow: TextOverflow.ellipsis,
                   ),

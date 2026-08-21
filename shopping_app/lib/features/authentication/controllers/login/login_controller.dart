@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:shopping_app/data/repositories/user/user_repository.dart';
-import 'package:shopping_app/features/authentication/models/user_model.dart';
 import 'package:shopping_app/features/personalization/controllers/user_controller.dart';
 import 'package:shopping_app/utils/constants/keys.dart';
 import 'package:get_storage/get_storage.dart';
@@ -15,7 +13,6 @@ class LoginController extends GetxController {
   static LoginController get instance => Get.find();
 
   // variables
-  final _userController = Get.put(UserController());
   final email = TextEditingController();
   final password = TextEditingController();
   RxBool isPasswordVisible = false.obs;
@@ -97,16 +94,19 @@ class LoginController extends GetxController {
           title: 'No Internet',
           message: 'Please check your internet connection and try again',
         );
-        print("No Internet Connection");
+  
         return;
       }
+      //------------------------------------------------------------------------------------------------------
+
+      //--------------------------------------------------------------------------------------------------------------------
 
       // google authentication
       UserCredential userCredential = await AuthenticationRepository.instance
           .signInWithGoogle();
 
       // save user Record
-      await _userController.saveUserRecord(userCredential);
+      await Get.put(UserController()).saveUserRecord(userCredential);
       // stop loading
       UFullScreenLoader.stopLoading();
 
@@ -115,7 +115,6 @@ class LoginController extends GetxController {
     } catch (e) {
       // stop loading
       UFullScreenLoader.stopLoading();
-      print("Google Sign-In Error: $e");
       // show error message
       USnackBarHelpers.errorSnackBar(
         title: 'Login Failed',

@@ -1,28 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:shopping_app/common/style/padding.dart';
 import 'package:shopping_app/common/widgets/appbar/appbar.dart';
 import 'package:shopping_app/common/widgets/button/elevated_button.dart';
 import 'package:shopping_app/common/widgets/custom_shapes/rounded_container.dart';
 import 'package:shopping_app/common/widgets/login_signup/success_screen.dart';
 import 'package:shopping_app/common/widgets/textfields/promo_text_field.dart';
+import 'package:shopping_app/features/shop/controllers/cart/cart_controller.dart';
+import 'package:shopping_app/features/shop/controllers/order/order_controller.dart';
 import 'package:shopping_app/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:shopping_app/features/shop/screens/checkout/widgets/billing_address_section.dart';
 import 'package:shopping_app/features/shop/screens/checkout/widgets/billing_amount_section.dart';
 import 'package:shopping_app/features/shop/screens/checkout/widgets/billing_payment_section.dart';
 import 'package:shopping_app/navigation_menu.dart';
-import 'package:shopping_app/utils/constants/colors.dart';
 import 'package:shopping_app/utils/constants/images.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
-import 'package:shopping_app/utils/helpers/helper_functions.dart';
+import 'package:shopping_app/utils/constants/texts.dart';
+import 'package:shopping_app/utils/helpers/pricing_calculator.dart';
+import 'package:shopping_app/utils/popups/snackbar_helpers.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final dark = UHelperFunctions.isDarkMode(context);
+    final controller = CartController.instance;
+    double subTotal = controller.totalCartPrice.value;
+    double totalPrice = UPricingCalculator.calculateTotalPrice(
+      subTotal,
+      'Pakistan',
+    );
+    final orderController = Get.put(OrderController());
     return Scaffold(
       // appbar
       appBar: UAppBar(
@@ -71,20 +79,18 @@ class CheckoutScreen extends StatelessWidget {
       ),
 
       // bottom navigation
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(USizes.defaultSpace),
-        child: UElevatedButton(
-          onPressed: () => Get.to(
-            () => SuccessScreen(
-              title: 'Payment Success',
-              subTitle: 'Your Items will be shipped soon!',
-              image: UImages.successfulPaymentIcon,
-              onTap: () => Get.offAll(() => NavigationMenu()),
-            ),
+bottomNavigationBar: Padding(
+  padding: const EdgeInsets.all(USizes.defaultSpace),
+  child: UElevatedButton(
+    onPressed: subTotal > 0
+        ? () => orderController.processOrder(totalPrice)
+        : () => USnackBarHelpers.errorSnackBar(
+            title: 'Empty Cart',
+            message: 'Add items in the cart',
           ),
-          child: Text('Checout \$253727'),
-        ),
-      ),
+    child: Text('Checkout ${UTexts.currency}$totalPrice'),
+  ),
+),
     );
   }
 }

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
-import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/common/widgets/button/elevated_button.dart';
 import 'package:shopping_app/features/authentication/controllers/singup/signup_controller.dart';
-import 'package:shopping_app/features/authentication/screens/signup/verify_email.dart';
-import 'package:shopping_app/features/authentication/screens/signup/widgets/privacy_policy_checkbox.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/constants/texts.dart';
 import 'package:shopping_app/utils/validators/validation.dart';
@@ -16,7 +13,7 @@ class USignupForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = SignupController.Instance;
+    final controller = Get.put(SignupController());
     return Form(
       key: controller.signUpFormKey,
       child: Column(

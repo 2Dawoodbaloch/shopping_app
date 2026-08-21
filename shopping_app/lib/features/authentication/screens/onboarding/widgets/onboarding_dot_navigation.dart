@@ -3,8 +3,8 @@ import 'package:shopping_app/features/authentication/controllers/onboarding/onbo
 import 'package:shopping_app/utils/helpers/device_helpers.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class onBoardingDotNavigation extends StatelessWidget {
-  const onBoardingDotNavigation({super.key});
+class OnBoardingDotNavigation extends StatelessWidget {
+  const OnBoardingDotNavigation({super.key});
 
   @override
   Widget build(BuildContext context) {

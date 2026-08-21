@@ -65,4 +65,10 @@ class UTexts {
   static const String homeAppBarSubTitle = 'Unknown Pro';
   static const String searchBarTitle = 'Search in Store';
   static const String popularCategories = 'Popular Categories';
+
+
+  // eidt Profile
+  static const String updateName = "Update Name";
+  static const String save = "Save";
+  static const String updateText = "update your name to new name and then save it ";
 }

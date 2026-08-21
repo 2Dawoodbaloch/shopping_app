@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:shopping_app/features/personalization/controllers/user_controller.dart';
 import 'package:shopping_app/features/personalization/screens/edit_profile/edit_profile.dart';
 
 class UserProfileTile extends StatelessWidget {
@@ -9,13 +9,14 @@ class UserProfileTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      title: Text('Unkown Pro'),
-      subtitle: Text(
-        'unknown@gmail.com',
+      title: Obx(() => Text(controller.user.value.fullName)),
+      subtitle:Obx(() =>  Text(
+        controller.user.value.email,
         style: Theme.of(context).textTheme.bodyMedium,
-      ),
+      ),),
       trailing: IconButton(
         onPressed: () => Get.to(() => EditProfileScreen()),
         icon: Icon(Iconsax.edit),

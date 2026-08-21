@@ -31,7 +31,7 @@ class UFullScreenLoader {
     );
   }
 
-  static stopLoading() {
+  static void stopLoading() {
     Navigator.of(Get.overlayContext!).pop();
   }
 }

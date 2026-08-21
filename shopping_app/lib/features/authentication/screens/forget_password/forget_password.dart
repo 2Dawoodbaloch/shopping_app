@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:get/state_manager.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/common/style/padding.dart';
 import 'package:shopping_app/common/widgets/button/elevated_button.dart';
@@ -8,8 +7,8 @@ import 'package:shopping_app/features/authentication/screens/forget_password/res
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/constants/texts.dart';
 
-class ForgetPassword extends StatelessWidget {
-  const ForgetPassword({super.key});
+class ForgetPasswordScreen extends StatelessWidget {
+  const ForgetPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

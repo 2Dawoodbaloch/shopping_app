@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/common/style/shadow.dart';
+import 'package:shopping_app/features/shop/screens/search/search_store.dart';
 import 'package:shopping_app/utils/helpers/helper_functions.dart';
 
 import '../../../utils/constants/colors.dart';
@@ -19,7 +21,7 @@ class USearchBar extends StatelessWidget {
       right: USizes.spaceBtwSections,
       left: USizes.spaceBtwSections,
       child: GestureDetector(
-        onTap: () {},
+        onTap: () => Get.to(() => SearchStoreScreen()),
         child: Hero(
           tag: 'search_animation',
           child: Container(
@@ -35,7 +37,7 @@ class USearchBar extends StatelessWidget {
                 /// Search Icon
                 Icon(Iconsax.search_normal, color: UColors.darkGrey),
                 SizedBox(width: USizes.spaceBtwItems),
-
+          
                 /// Search Bar Title
                 Text(
                   UTexts.searchBarTitle,

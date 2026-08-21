@@ -3,15 +3,18 @@ import 'package:readmore/readmore.dart';
 import 'package:shopping_app/common/style/padding.dart';
 import 'package:shopping_app/common/widgets/button/elevated_button.dart';
 import 'package:shopping_app/common/widgets/texts/section_heading.dart';
+import 'package:shopping_app/features/shop/models/product_model.dart';
 import 'package:shopping_app/features/shop/screens/product_details/widgets/bottom_add_to_cart.dart';
 import 'package:shopping_app/features/shop/screens/product_details/widgets/product_attributes.dart';
 import 'package:shopping_app/features/shop/screens/product_details/widgets/product_meta_data.dart';
-import 'package:shopping_app/features/shop/screens/product_details/widgets/product_thumbnai_and%20_slider.dart';
+import 'package:shopping_app/features/shop/screens/product_details/widgets/product_thumbnail_and_slider.dart';
+import 'package:shopping_app/utils/constants/enums.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key});
+  const ProductDetailsScreen({super.key, required this.product});
 
+  final ProductModel product;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,18 +22,22 @@ class ProductDetailsScreen extends StatelessWidget {
         child: Column(
           children: [
             // product image with slider
-            UProductThmbnaiAndSlider(),
+            UProductThmbnaiAndSlider(product: product),
 
             // product details
             Padding(
               padding: UPadding.screenPadding,
               child: Column(
                 children: [
-                  UProductMetaData(),
+                  UProductMetaData(product: product),
                   SizedBox(height: USizes.spaceBtwSections),
-                  // attribute
-                  UProductAttributes(),
-                  SizedBox(height: USizes.spaceBtwSections),
+
+                  /// Attributes
+                  if (product.productType ==
+                      ProductType.variable.toString()) ...[
+                    UProductAttributes(product: product,),
+                    SizedBox(height: USizes.spaceBtwSections),
+                  ],
                   // checkout buttonsp
                   UElevatedButton(onPressed: () {}, child: Text('Checkout')),
                   SizedBox(height: USizes.spaceBtwSections),
@@ -41,7 +48,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
                   // description
                   ReadMoreText(
-                    'This is a product of iPhone 11 with 512 GB,This is a product of iPhone 11 with 512 GB,This is a product of iPhone 11 with 512 GB',
+                    product.description ?? '',
                     trimLines: 2,
                     trimMode: TrimMode.Line,
                     trimCollapsedText: 'Show more',
@@ -63,7 +70,7 @@ class ProductDetailsScreen extends StatelessWidget {
       ),
 
       // botton navigaytion
-      bottomNavigationBar: UBottomAddToCart(),
+      bottomNavigationBar: UBottomAddToCart(product: product),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -8,6 +9,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:shopping_app/data/repositories/authentication_repository.dart';
 import 'package:shopping_app/firebase_options.dart';
 import 'package:shopping_app/my_app.dart';
+
+
+Future<void> _backgroundMessageHandler(RemoteMessage message) async {
+ await Firebase.initializeApp();
+}
 
 Future<void> main() async {
   /// widget flutter binding
@@ -21,10 +27,13 @@ Future<void> main() async {
 
   // firebase initialization
   await Firebase.initializeApp(
+    
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((value) {
     Get.put(AuthenticationRepository());
+    FirebaseMessaging.onBackgroundMessage(_backgroundMessageHandler);
   });
+
 
   // portrait up the device
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

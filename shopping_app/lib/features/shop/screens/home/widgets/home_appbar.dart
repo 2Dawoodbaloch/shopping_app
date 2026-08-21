@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shopping_app/common/widgets/appbar/appbar.dart';
 import 'package:shopping_app/common/widgets/products/cart/cart_counter_icon.dart';
+import 'package:shopping_app/features/personalization/controllers/user_controller.dart';
 import 'package:shopping_app/utils/constants/colors.dart';
 import 'package:shopping_app/utils/constants/texts.dart';
 
@@ -9,6 +11,7 @@ class UHomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(UserController());
     return UAppBar(
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,12 +25,19 @@ class UHomeAppBar extends StatelessWidget {
           ),
 
           // subtitle
-          Text(
-            UTexts.homeAppBarSubTitle,
-            style: Theme.of(
-              context,
-            ).textTheme.headlineSmall!.apply(color: UColors.white),
-          ),
+          Obx(() {
+            if (controller.profileLoading.value) {
+              return const CircularProgressIndicator();
+            }
+
+            return Text(
+              controller.user.value.fullName,
+
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall!.apply(color: UColors.white),
+            );
+          }),
         ],
       ),
       actions: [UCartCounterIcon()],

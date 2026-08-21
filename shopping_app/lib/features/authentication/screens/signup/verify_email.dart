@@ -1,14 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
-import 'package:get/utils.dart';
 import 'package:shopping_app/common/style/padding.dart';
 import 'package:shopping_app/common/widgets/button/elevated_button.dart';
-import 'package:shopping_app/common/widgets/login_signup/success_screen.dart';
 import 'package:shopping_app/data/repositories/authentication_repository.dart';
 import 'package:shopping_app/features/authentication/controllers/singup/verify_email_controller.dart';
-import 'package:shopping_app/features/authentication/screens/login/login.dart';
 import 'package:shopping_app/utils/constants/images.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/constants/texts.dart';

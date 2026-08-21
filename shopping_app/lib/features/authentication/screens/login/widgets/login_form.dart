@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/common/widgets/button/elevated_button.dart';
 import 'package:shopping_app/features/authentication/controllers/login/login_controller.dart';
 import 'package:shopping_app/features/authentication/screens/forget_password/forget_password.dart';
 import 'package:shopping_app/features/authentication/screens/signup/signup.dart';
-import 'package:shopping_app/navigation_menu.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/constants/texts.dart';
 import 'package:shopping_app/utils/validators/validation.dart';
@@ -75,7 +73,7 @@ class ULoginForm extends StatelessWidget {
               /// forgotten password
               TextButton(
                 onPressed: () {
-                  Get.to(() => ForgetPassword());
+                  Get.to(() => ForgetPasswordScreen());
                 },
                 child: Text(UTexts.forgetPassword),
               ),

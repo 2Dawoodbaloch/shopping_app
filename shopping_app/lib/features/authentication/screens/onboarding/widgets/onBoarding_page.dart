@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shopping_app/utils/helpers/device_helpers.dart';
 
-class onBoardingPage extends StatelessWidget {
-  const onBoardingPage({
+class OnBoardingPage extends StatelessWidget {
+  const OnBoardingPage({
     super.key,
     required this.animation,
     required this.title,

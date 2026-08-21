@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/features/personalization/screens/profile/profile.dart';
 import 'package:shopping_app/features/shop/screens/home/home.dart';

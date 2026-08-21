@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
 import 'package:shopping_app/common/widgets/texts/section_heading.dart';
+import 'package:shopping_app/features/personalization/controllers/adress_controller.dart';
 import 'package:shopping_app/utils/constants/colors.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 
@@ -8,6 +11,8 @@ class UBillingAddressSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(AdressController());
+    controller.getAllAddresses();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -15,36 +20,53 @@ class UBillingAddressSection extends StatelessWidget {
         USectionHeading(
           title: 'Billing Address',
           buttonTitle: 'Change',
-          onPressed: () {},
+          onPressed: () => controller.selectNewAddressBottomSheet(context),
         ),
-        Text('Unkown Pro', style: Theme.of(context).textTheme.titleLarge),
-        SizedBox(height: USizes.spaceBtwItems / 2),
 
-        Row(
-          children: [
-            Icon(Icons.phone, size: USizes.iconSm, color: UColors.darkerGrey),
-            SizedBox(width: USizes.spaceBtwItems),
-            Text('+92 233845704'),
-          ],
-        ),
-        SizedBox(height: USizes.spaceBtwItems / 2),
 
-        Row(
-          children: [
-            Icon(
-              Icons.location_history,
-              size: USizes.iconSm,
-              color: UColors.darkerGrey,
-            ),
-            SizedBox(width: USizes.spaceBtwItems),
-            Expanded(
-              child: Text(
-                'House NO.295, Hyderabad, Sindh, Pakistan',
-                softWrap: true,
+        Obx(() {
+          final address = controller.selectedAddress.value;
+          if(address.id.isEmpty){
+            return Text('select Address');
+          }
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(address.name, style: Theme.of(context).textTheme.titleLarge),
+              SizedBox(height: USizes.spaceBtwItems / 2),
+
+              Row(
+                children: [
+                  Icon(
+                    Icons.phone,
+                    size: USizes.iconSm,
+                    color: UColors.darkerGrey,
+                  ),
+                  SizedBox(width: USizes.spaceBtwItems),
+                  Text(address.phoneNumber),
+                ],
               ),
-            ),
-          ],
-        ),
+              SizedBox(height: USizes.spaceBtwItems / 2),
+
+              Row(
+                children: [
+                  Icon(
+                    Icons.location_history,
+                    size: USizes.iconSm,
+                    color: UColors.darkerGrey,
+                  ),
+                  SizedBox(width: USizes.spaceBtwItems),
+                  Expanded(
+                    child: Text(
+                     address.toString(),
+                      softWrap: true,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          );
+        }),
       ],
     );
   }

@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/common/widgets/layouts/grid_layout.dart';
@@ -5,20 +6,42 @@ import 'package:shopping_app/common/widgets/products/product_cards/product_card_
 import 'package:shopping_app/common/widgets/textfields/search_bar.dart';
 import 'package:shopping_app/common/widgets/texts/section_heading.dart';
 import 'package:shopping_app/features/shop/controllers/home/home_controller.dart';
+import 'package:shopping_app/features/shop/controllers/product/product_controller.dart';
+import 'package:shopping_app/features/shop/models/product_model.dart';
 import 'package:shopping_app/features/shop/screens/all_products_screen/all_products_screen.dart';
 import 'package:shopping_app/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:shopping_app/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:shopping_app/common/widgets/custom_shapes/primary_header_container.dart';
 import 'package:shopping_app/features/shop/screens/home/widgets/promo_slider.dart';
-import 'package:shopping_app/utils/constants/images.dart';
-import 'package:shopping_app/utils/constants/sizes.dart';
+import 'package:shopping_app/notification_service.dart';
+import 'package:shopping_app/utils/constants/sizes.dart'; 
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    NotificationService notificationService = NotificationService();
+    notificationService.requestNotificationPermission();
+    notificationService.getFcmToken();
+    // local notification
+    notificationService.initLocalNotification();
+    // there a listner that listen recieve notification in foreground
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      notificationService.showNotification(message);
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final controller = Get.put(HomeController());
+    Get.put(HomeController());
+    final productController = Get.put(ProductController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -56,31 +79,36 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(USizes.defaultSpace),
               child: Column(
                 children: [
-                  UPromoSlider(
-                    banners: [
-                      UImages.homeBanner1,
-                      UImages.homeBanner2,
-                      UImages.homeBanner3,
-                      UImages.homeBanner4,
-                      UImages.homeBanner5,
-                    ],
-                  ),
+                  UPromoSlider(),
                   const SizedBox(height: USizes.spaceBtwSections),
 
                   /// section heading
                   USectionHeading(
                     title: 'Popular Products',
-                    onPressed: () => Get.to(() => AllProductsScreen()),
+                    onPressed: () => Get.to(() => AllProductsScreen(
+                      title: "Popular Products",
+                      futureMethod: productController.getAllFeaturedProduct(),
+                    )),
                   ),
                   const SizedBox(height: USizes.spaceBtwSections),
 
                   // Grid view of  product card
-                  UGridLayout(
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      return UProductCardVertical();
-                    },
-                  ),
+                  Obx(() {
+                    if (productController.isLoading.value) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (productController.featuredProducts.isEmpty) {
+                      return Center(child: Text('Products Not Found!'));
+                    }
+
+                    return UGridLayout(
+                      itemCount: productController.featuredProducts.length,
+                      itemBuilder: (context, index) {
+                        ProductModel product = productController.featuredProducts[index];
+                        return UProductCardVertical(product: product);
+                      },
+                    );
+                  }),
                 ],
               ),
             ),

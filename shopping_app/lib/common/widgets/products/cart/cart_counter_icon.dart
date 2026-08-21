@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:shopping_app/features/shop/controllers/cart/cart_controller.dart';
 import 'package:shopping_app/features/shop/screens/cart/cart.dart';
 
 import '../../../../utils/constants/colors.dart';
@@ -13,6 +13,7 @@ class UCartCounterIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool dark = UHelperFunctions.isDarkMode(context);
+    final controller = Get.put(CartController());
 
     return Stack(
       children: [
@@ -34,13 +35,13 @@ class UCartCounterIcon extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: Center(
-              child: Text(
-                '2',
+              child: Obx(() => Text(
+                controller.noOfCartItems.value.toString(),
                 style: Theme.of(context).textTheme.labelLarge!.apply(
                   fontSizeFactor: 0.8,
                   color: dark ? UColors.light : UColors.dark,
                 ),
-              ),
+              ),)
             ),
           ),
         ),

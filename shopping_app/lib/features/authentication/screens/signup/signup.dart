@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:shopping_app/common/style/padding.dart';
 import 'package:shopping_app/common/widgets/button/social_buttons.dart';
 import 'package:shopping_app/common/widgets/login_signup/form_divider.dart';
@@ -14,7 +13,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SignupController());
+    Get.put(SignupController());
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(

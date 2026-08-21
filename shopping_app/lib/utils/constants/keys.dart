@@ -1,4 +1,4 @@
-class UKeys{
+class UKeys {
   UKeys._();
 
   static const String userCollection = 'Users';
@@ -15,12 +15,17 @@ class UKeys{
   static const String rememberMeEmail = 'rememberEmail';
   static const String rememberMePassword = 'rememberPassword';
 
-  static const String cloudName = 'dx4o5amce';
+  static const String cloudName = 'inczy3d3';
   static const String uploadPreset = 'upload_image';
   static const String profileFolder = 'Profile Pictures';
-  static const String apiKey = 'YOUR_API_KEY';
-  static const String apiSecret = 'YOUR_API_SECRET';
+  static const String apiKey = '196837784561826';
+  static const String apiSecret = 'pT9e-_gxIQP4mMKCetS0v776pDY';
 
+  //   static const String cloudName = ";
+  // static const String uploadPreset = ";
+  // static const String profileFolder = ";
+  // static const String apikey = ";
+  // static const String apiSecret = ';|
 
   static const String categoryFolder = 'Category Pictures';
   static const String bannersFolder = 'Banners Images';

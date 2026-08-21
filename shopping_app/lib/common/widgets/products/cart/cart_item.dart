@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:shopping_app/common/widgets/images/rounded_image.dart';
 import 'package:shopping_app/common/widgets/texts/brand_title_with_verify_icon.dart';
 import 'package:shopping_app/common/widgets/texts/product_title_text.dart';
+import 'package:shopping_app/features/shop/models/cart_item_model.dart';
 import 'package:shopping_app/utils/constants/colors.dart';
 import 'package:shopping_app/utils/constants/images.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/helpers/helper_functions.dart';
 
 class UCartItem extends StatelessWidget {
-  const UCartItem({super.key});
+  const UCartItem({super.key, required this.cartItem});
 
+  final CartItemModel cartItem;
   @override
   Widget build(BuildContext context) {
     final dark = UHelperFunctions.isDarkMode(context);
@@ -17,7 +19,8 @@ class UCartItem extends StatelessWidget {
       children: [
         // PRODUCT IMAGE
         URoundedImage(
-          imageUrl: UImages.productImage4a,
+          imageUrl: cartItem.image ?? '',
+          isNetworkImage: true,
           height: 60,
           width: 60,
           padding: EdgeInsets.all(USizes.sm),
@@ -31,34 +34,33 @@ class UCartItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // brand
-              UBrandTitleWithVerifyIcon(title: 'iPhone'),
+              UBrandTitleWithVerifyIcon(title: cartItem.brandName ?? ''),
 
               // title
-              UProductTitleText(title: 'iPhone 11 64 GB ', maxLines: 1),
+              UProductTitleText(title: cartItem.title, maxLines: 1),
 
               // variation or attributes
+              /// Variation OR Attributes
               RichText(
                 text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Colour ',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    TextSpan(
-                      text: 'Green ',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    TextSpan(
-                      text: 'Storage ',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    TextSpan(
-                      text: '512 GB ',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
+                  children: (cartItem.selectedVariation ?? {}).entries
+                      .map(
+                        (e) => TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '${e.key} ',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            TextSpan(
+                              text: '${e.value} ',
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ],
+                        ),
+                      )
+                      .toList(),
                 ),
-              ),
+              ), // TextSpan, TextSpan, RichText
             ],
           ),
         ),

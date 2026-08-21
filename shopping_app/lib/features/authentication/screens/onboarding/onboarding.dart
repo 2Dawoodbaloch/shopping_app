@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
 import 'package:shopping_app/features/authentication/controllers/onboarding/onboarding_controller.dart';
-import 'package:shopping_app/features/authentication/screens/onboarding/widgets/onBoarding_page.dart';
+import 'package:shopping_app/features/authentication/screens/onboarding/widgets/onboarding_page.dart';
 import 'package:shopping_app/features/authentication/screens/onboarding/widgets/onboarding_dot_navigation.dart';
 import 'package:shopping_app/features/authentication/screens/onboarding/widgets/onboarding_next_button.dart';
 import 'package:shopping_app/features/authentication/screens/onboarding/widgets/onboarding_skip_button.dart';
@@ -26,17 +25,17 @@ class OnboardingScreen extends StatelessWidget {
               controller: controller.pageController,
               onPageChanged: controller.updatePageIndicator,
               children: [
-                onBoardingPage(
+                OnBoardingPage(
                   animation: UImages.onboarding1Animation,
                   title: UTexts.onBoardingTitle1,
                   subTitle: UTexts.onBoardingSubTitle1,
                 ),
-                onBoardingPage(
+                OnBoardingPage(
                   animation: UImages.onboarding2Animation,
                   title: UTexts.onBoardingTitle2,
                   subTitle: UTexts.onBoardingSubTitle2,
                 ),
-                onBoardingPage(
+                OnBoardingPage(
                   animation: UImages.onboarding3Animation,
                   title: UTexts.onBoardingTitle3,
                   subTitle: UTexts.onBoardingSubTitle3,
@@ -45,7 +44,7 @@ class OnboardingScreen extends StatelessWidget {
             ),
 
             /// indicator
-            onBoardingDotNavigation(),
+            OnBoardingDotNavigation(),
 
             /// Bottom Button
             OnboardingNextButton(),

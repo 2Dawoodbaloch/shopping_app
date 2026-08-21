@@ -9,6 +9,7 @@ class UserModel {
   final String email;
   String phoneNumber;
   String profilePicture;
+  String publicId;
 
   UserModel({
     required this.id,
@@ -18,6 +19,7 @@ class UserModel {
     required this.email,
     required this.phoneNumber,
     required this.profilePicture,
+    this.publicId = ''
   });
 
   /// Function to get the full name
@@ -35,6 +37,7 @@ class UserModel {
     email: "",
     phoneNumber: "",
     profilePicture: "",
+    publicId: ''
   );
 
   Map<String, dynamic> toJson() {
@@ -46,6 +49,7 @@ class UserModel {
       'email': email,
       'phoneNumber': phoneNumber,
       'profilePicture': profilePicture,
+      'publicId':publicId
     };
   }
 
@@ -62,6 +66,7 @@ class UserModel {
         email: data['email'] ?? '',
         phoneNumber: data['phoneNumber'] ?? '',
         profilePicture: data['profilePicture'] ?? '',
+        publicId: data['publicId']
       );
     } else {
       return UserModel.empty();

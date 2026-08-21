@@ -7,7 +7,7 @@ import '../helpers/helper_functions.dart';
 
 class USnackBarHelpers {
 
-  static customToast({required message}){
+  static void customToast({required String message}){
     ScaffoldMessenger.of(Get.context!).showSnackBar(
         SnackBar(
           elevation: 0,
@@ -27,7 +27,7 @@ class USnackBarHelpers {
   }
 
   /// Warning Orange Snack bar
-  static warningSnackBar({required title, message = ''}) {
+  static void warningSnackBar({required String title, String message = ''}) {
     Get.snackbar(title, message,
         isDismissible: true,
         shouldIconPulse: true,
@@ -40,7 +40,7 @@ class USnackBarHelpers {
   }
 
   /// Success Green Snack bar
-  static successSnackBar({required title, message = '', duration = 3}) {
+  static void successSnackBar({required String title, message = '', duration = 3}) {
     Get.snackbar(title, message,
         isDismissible: true,
         shouldIconPulse: true,
@@ -53,7 +53,7 @@ class USnackBarHelpers {
   }
 
   /// Error Red Snack bar
-  static errorSnackBar({required title, message = ''}) {
+  static void errorSnackBar({required String title, message = ''}) {
     Get.snackbar(title, message,
         isDismissible: true,
         shouldIconPulse: true,

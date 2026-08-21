@@ -10,13 +10,13 @@ import 'package:shopping_app/utils/popups/full_screen_loader.dart';
 import 'package:shopping_app/utils/popups/snackbar_helpers.dart';
 
 class SignupController extends GetxController {
-  static SignupController get Instance => Get.find();
+  // static SignupController get Instance => Get.find();
 
   // Varibale
   final _authRepository = Get.put(AuthenticationRepository());
   final signUpFormKey = GlobalKey<FormState>();
   RxBool isPasswordVisible = false.obs;
-  // RxBool privacyPolicy = false.obs;
+  RxBool privacyPolicy = false.obs;
 
   final firstName = TextEditingController();
   final lastName = TextEditingController();
@@ -55,7 +55,7 @@ class SignupController extends GetxController {
         UFullScreenLoader.stopLoading(); // ✅ close dialog
         return;
       }
-      ;
+      
 
       // Resgister user using firebase
       UserCredential userCredential = await _authRepository.registerUser(
@@ -83,14 +83,12 @@ class SignupController extends GetxController {
         title: 'Congratulation!',
         message: 'Your account has been created! Verfiy email to continue',
       );
-      print('successful');
       // stop loading
       UFullScreenLoader.stopLoading();
 
       // redirect to verify email screen
       Get.to(() => VerifyEmailScreen(email: email.text));
     } catch (e) {
-      print("❌ Signup error: $e");
       UFullScreenLoader.stopLoading();
       USnackBarHelpers.errorSnackBar(title: 'Error', message: e.toString());
     }
